@@ -28,7 +28,8 @@
         [HttpGet("multi")]
         public IActionResult GetProd(double a, double b)
         {
-            return Ok(a * b);
+            _calculator.SetStrategy(new CalculateMultiplication());
+            return Ok(_calculator.Calculate(a, b));
         }
 
         [HttpGet("div")]
@@ -36,8 +37,9 @@
         {
             if (b==0)
                 return BadRequest("Cannot divide by Zero, you moron!");
-            
-            return Ok(a / b);
+
+            _calculator.SetStrategy(new CalculateDivision());
+            return Ok(_calculator.Calculate(a, b));
         }
     }
 }
